@@ -7,11 +7,13 @@
     "node": ">=20"
   },
   "scripts": {
-    "dev": "esrun --watch src/index.ts"
+    "watch": "microbundle watch -i src/main.ts -o dist/main.js --no-pkg-main --target node -f esm --no-sourcemap --generateTypes=false",
+    "dev": "node --watch dist/main.js",
+    "build": "microbundle"
   },
   "devDependencies": {
-    "@tinyhttp/cli": "^1.3.7",
-    "esrun": "^3.2.26",
+    "@flydotio/dockerfile": "^0.5.7",
+    "microbundle": "^0.15.1",
     "typescript": "^5.5.2"
   },
   "dependencies": {
