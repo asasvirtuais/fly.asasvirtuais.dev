@@ -6,13 +6,11 @@ FROM node:lts-slim as base
 
     ENV NODE_ENV='production'
 
-FROM base as install
-
     COPY --link . .
 
     RUN npm install --frozen-lockfile
 
-FROM install as build
+FROM base as build
 
     RUN npm run build
 
