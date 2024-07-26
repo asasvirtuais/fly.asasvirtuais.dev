@@ -14,9 +14,9 @@ FROM base as install
 
 FROM install as build
 
-    RUN pnpm build
+    RUN npm build
 
-    FROM build as release
+FROM build
 
     COPY --from=build /app/dist /app/dist
 
