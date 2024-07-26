@@ -1,18 +1,13 @@
 {
-  "name": "asasvirtuais.fly.dev",
+  "name": "@asasvirtuais/fly",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@9.2.0",
-  "engines": {
-    "node": ">=20"
-  },
   "scripts": {
     "start": "node dist/main.js",
     "watch": "tsc --watch",
     "dev": "node --watch dist/main.js"
   },
   "devDependencies": {
-    "@flydotio/dockerfile": "^0.5.7",
     "typescript": "^5.5.2"
   },
   "dependencies": {

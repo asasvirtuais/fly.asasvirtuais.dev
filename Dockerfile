@@ -1,26 +1,25 @@
-FROM node:lts-slim as base
-
 LABEL fly_launch_runtime='node'
 
-WORKDIR /app
+FROM node:lts-slim as base
 
-ENV NODE_ENV='production'
+    WORKDIR /app
 
-RUN npm install -g pnpm@$latest
+    ENV NODE_ENV='production'
 
 FROM base as install
 
-COPY --link . .
+    COPY --link . .
 
-RUN pnpm install --frozen-lockfile
+    RUN npm install --frozen-lockfile
 
 FROM install as build
 
-RUN pnpm build
+    RUN pnpm build
 
-FROM build as release
+    FROM build as release
 
-COPY --from=build /app/dist /app/dist
+    COPY --from=build /app/dist /app/dist
 
-EXPOSE 3000
-CMD [ "node", "dist/main.js" ]
+    EXPOSE 3000
+
+    CMD [ "npm", "start" ]
