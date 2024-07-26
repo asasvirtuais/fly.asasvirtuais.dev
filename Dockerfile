@@ -1,43 +1,26 @@
-# syntax = docker/dockerfile:1
+FROM node:lts-slim as base
 
-# Adjust NODE_VERSION as desired
-ARG NODE_VERSION=20.10.0
-FROM node:${NODE_VERSION}-slim as base
+LABEL fly_launch_runtime='node'
 
-LABEL fly_launch_runtime="Node.js"
-
-# Node.js app lives here
 WORKDIR /app
 
-# Set production environment
-ENV NODE_ENV="production"
+ENV NODE_ENV='production'
 
-# Install pnpm
-ARG PNPM_VERSION=9.2.0
-RUN npm install -g pnpm@$PNPM_VERSION
+RUN npm install -g pnpm@$latest
 
+FROM base as install
 
-# Throw-away build stage to reduce size of final image
-FROM base as build
-
-# Install packages needed to build node modules
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential node-gyp pkg-config python-is-python3
-
-# Install node modules
-COPY --link package.json pnpm-lock.yaml ./
-RUN pnpm install --frozen-lockfile
-
-# Copy application code
 COPY --link . .
 
+RUN pnpm install --frozen-lockfile
 
-# Final stage for app image
-FROM base
+FROM install as build
 
-# Copy built application
-COPY --from=build /app /app
+RUN pnpm build
 
-# Start the server by default, this can be overwritten at runtime
+FROM build as release
+
+COPY --from=build /app/dist /app/dist
+
 EXPOSE 3000
 CMD [ "node", "dist/main.js" ]
