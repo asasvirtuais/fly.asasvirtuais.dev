@@ -14,9 +14,9 @@ FROM base as install
 
 FROM install as build
 
-    RUN npm build
+    RUN npm run build
 
-FROM build
+FROM base
 
     COPY --from=build /app/dist /app/dist
 
