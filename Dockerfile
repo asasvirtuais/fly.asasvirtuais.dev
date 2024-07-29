@@ -10,13 +10,13 @@ COPY --link . .
 
 RUN npm install --frozen-lockfile
 
-FROM base as build
+# FROM base as build
 
 RUN npm run build
 
-FROM base
+# FROM base
 
-COPY --from=build /app/dist /app/dist
+# COPY --from=build /app/dist /app/dist
 
 EXPOSE 3000
 
