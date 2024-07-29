@@ -1,22 +1,22 @@
 LABEL fly_launch_runtime='node'
 
+ENV NODE_ENV='production'
+
 FROM node:lts-slim as base
 
 WORKDIR /app
-
-ENV NODE_ENV='production'
 
 COPY --link . .
 
 RUN npm install --frozen-lockfile
 
-# FROM base as build
+FROM base as build
 
 RUN npm run build
 
-# FROM base
+FROM base
 
-# COPY --from=build /app/dist /app/dist
+COPY --from=build /app/dist /app/dist
 
 EXPOSE 3000
 
