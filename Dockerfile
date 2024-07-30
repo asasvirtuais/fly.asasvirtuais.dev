@@ -1,7 +1,3 @@
-LABEL fly_launch_runtime='node'
-
-ENV NODE_ENV='production'
-
 FROM node:lts-slim as base
 
 WORKDIR /app
@@ -20,4 +16,4 @@ COPY --from=build /app/dist /app/dist
 
 EXPOSE 3000
 
-CMD [ "npm", "start" ]
+CMD [ "sh", "-c", "if [ \"$DOCKER_ENV\" = 'dev' ]; then npm run dev; else npm start; fi" ]

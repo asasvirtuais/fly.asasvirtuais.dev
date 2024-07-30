@@ -3,9 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node dist/main.js",
-    "watch": "tsc --watch",
-    "dev": "node --watch dist/main.js"
+    "dev": "node --watch dist/main.js & tsc --watch",
+    "build": "tsc",
+    "start": "node dist/main.js"
   },
   "devDependencies": {
     "typescript": "^5.5.2"
