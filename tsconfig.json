@@ -2,14 +2,15 @@
     "compilerOptions": {
       "strict": true,
       "target": "esnext",
-      "module": "esnext",
+      "module": "nodenext",
       "allowJs": true,
       "skipLibCheck": true,
       "noEmit": false,
-      "moduleResolution": "NodeNext",
+      "moduleResolution": "nodenext",
       "paths": {
         "@/*": ["./src/*"]
-      }
+      },
+      "outDir": "dist"
     },
     "include": ["src/**/*"],
     "exclude": ["node_modules"]
