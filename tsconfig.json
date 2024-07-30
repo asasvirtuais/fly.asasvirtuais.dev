@@ -6,11 +6,10 @@
       "allowJs": true,
       "skipLibCheck": true,
       "noEmit": false,
-      "moduleResolution": "node",
+      "moduleResolution": "NodeNext",
       "paths": {
         "@/*": ["./src/*"]
-      },
-      "outDir": "dist"
+      }
     },
     "include": ["src/**/*"],
     "exclude": ["node_modules"]
