@@ -1,5 +1,3 @@
-LABEL fly_launch_runtime='node'
-
 FROM node:lts-slim as base
 
 WORKDIR /app
