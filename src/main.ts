@@ -21,14 +21,13 @@ app.configure(socketio())
 app.use(
   'todos',
   airtable({
-    apiKey: process.env.AIRTABLE_TOKEN,
+    apiKey: `Bearer ${process.env.AIRTABLE_TOKEN}`,
     baseId: 'app6ubrlP9ZC2JqEq',
     tableName: 'Todos',
   })
 ).use(
   (context) => {
     const authorization = context.http?.headers?.['authorization'] ?? ''
-    console.log(context)
     if (authorization !== process.env.SUPER_SECRET_KEY)
       throw new Error('Unauthorized')
   }
