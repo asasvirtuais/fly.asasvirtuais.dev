@@ -38,6 +38,6 @@ app.hooks({
 )
 
 app
-  .listen(3030)
-  .then(() => console.log('Feathers server listening on localhost:3030'))
+  .listen(3000)
+  .then(() => console.log('Feathers server listening on localhost:3000'))
 
