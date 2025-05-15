@@ -18,14 +18,18 @@ app.configure(rest())
 // Configure Socket.io real-time APIs
 app.configure(socketio())
 
-app.use(
-  'todos',
-  airtable({
-    apiKey: process.env.AIRTABLE_TOKEN,
-    baseId: 'app6ubrlP9ZC2JqEq',
-    tableName: 'Todos',
-  })
-).use(
+const useTable = (tableName: string) => airtable({
+  apiKey: process.env.AIRTABLE_TOKEN,
+  baseId: 'app6ubrlP9ZC2JqEq',
+  tableName,
+})
+
+app.use('todos', useTable('Todos'))
+app.use('users', useTable('Users'))
+app.use('chats', useTable('Chats'))
+app.use('messages', useTable('Messages'))
+app.use('presets', useTable('Presets'))
+.use(
   (context) => {
     const authorization = context.http?.headers?.['authorization'] ?? ''
     if (authorization !== process.env.SUPER_SECRET_KEY)
