@@ -8,9 +8,17 @@
     "start": "node dist/main.js"
   },
   "devDependencies": {
-    "typescript": "^5.5.2"
+    "@types/node": "^22.15.18",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
   },
   "dependencies": {
-    "@tinyhttp/app": "^2.2.3"
+    "@feathersjs/authentication": "^5.0.34",
+    "@feathersjs/feathers": "^5.0.34",
+    "@feathersjs/koa": "^5.0.34",
+    "@feathersjs/socketio": "^5.0.34",
+    "airtable": "^0.12.2",
+    "dotenv": "^16.5.0",
+    "feathers": "^2.2.4"
   }
 }

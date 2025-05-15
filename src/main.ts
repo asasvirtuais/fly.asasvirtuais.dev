@@ -1,7 +1,43 @@
-import { App } from '@tinyhttp/app'
+import 'dotenv/config'
+import { feathers } from '@feathersjs/feathers'
+import { koa, rest, bodyParser, errorHandler, serveStatic } from '@feathersjs/koa'
+import socketio from '@feathersjs/socketio'
+import airtable from './airtable.js'
+import { before } from 'node:test'
 
-const app = new App()
+const app = koa(feathers())
+
+// Use the public folder for static file hosting
+app.use(serveStatic('./public'))
+// Register the error handle
+app.use(errorHandler())
+// Parse JSON request bodies
+app.use(bodyParser())
+// Register REST service handler
+app.configure(rest())
+// Configure Socket.io real-time APIs
+app.configure(socketio())
+
+app.hooks({
+  before: {
+    all: [
+      context => {
+        const authorization = context.http?.headers?.['authorization'] ?? ''
+        if ( authorization !== process.env.SUPER_SECRET_KEY)
+          throw new Error('Unauthorized')
+      }
+    ]
+  }
+}).use(
+  'todos',
+  airtable({
+    apiKey: process.env.AIRTABLE_TOKEN,
+    baseId: 'app6ubrlP9ZC2JqEq',
+    tableName: 'Todos',
+  })
+)
 
 app
-  .get('/', (_, res) => void res.send('<h1>Hello again. World!</h1>'))
-  .listen(3000, () => console.log('Server is running on http://localhost:3000'))
+  .listen(3030)
+  .then(() => console.log('Feathers server listening on localhost:3030'))
+
