@@ -21,7 +21,7 @@ app.configure(socketio())
 app.use(
   'todos',
   airtable({
-    apiKey: `Bearer ${process.env.AIRTABLE_TOKEN}`,
+    apiKey: process.env.AIRTABLE_TOKEN,
     baseId: 'app6ubrlP9ZC2JqEq',
     tableName: 'Todos',
   })
