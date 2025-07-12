@@ -3,7 +3,6 @@ import { feathers } from '@feathersjs/feathers'
 import { koa, rest, bodyParser, errorHandler, serveStatic } from '@feathersjs/koa'
 import socketio from '@feathersjs/socketio'
 import airtable from './airtable.js'
-import { before } from 'node:test'
 
 const app = koa(feathers())
 
@@ -18,17 +17,17 @@ app.configure(rest())
 // Configure Socket.io real-time APIs
 app.configure(socketio())
 
-const useTable = (tableName: string) => airtable({
+const tableService = (tableName: string) => airtable({
   apiKey: process.env.AIRTABLE_TOKEN,
   baseId: 'app6ubrlP9ZC2JqEq',
   tableName,
 })
 
-app.use('todos', useTable('Todos'))
-app.use('users', useTable('Users'))
-app.use('chats', useTable('Chats'))
-app.use('messages', useTable('Messages'))
-app.use('presets', useTable('Presets'))
+app.use('todos', tableService('Todos'))
+app.use('users', tableService('Users'))
+app.use('chats', tableService('Chats'))
+app.use('messages', tableService('Messages'))
+app.use('presets', tableService('Presets'))
 .use(
   (context) => {
     const authorization = context.http?.headers?.['authorization'] ?? ''
@@ -40,4 +39,3 @@ app.use('presets', useTable('Presets'))
 app
   .listen(3000)
   .then(() => console.log('Feathers server listening on localhost:3000'))
-
